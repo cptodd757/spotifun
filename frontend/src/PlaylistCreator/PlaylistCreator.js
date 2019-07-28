@@ -50,7 +50,9 @@ export default class PlaylistCreator extends Component {
       },
       redirect: 'follow', // manual, *follow, error
       referrer: 'no-referrer', // no-referrer, *client
-      body: JSON.stringify(this.state.params), // body data type must match "Content-Type" header
+      body: JSON.stringify({params:this.state.params,
+                            access_token:localStorage.getItem("access_token"),
+                            uid:localStorage.getItem("uid")}), // body data type must match "Content-Type" header
   })
   .then(response => response.json());
   }

@@ -12,7 +12,7 @@ export default class Home extends Component {
  {
    super();
    this.state = {
-     api_key:'asdf'
+     access_token:'asdf'
    }
    this.clicked = this.clicked.bind(this)
  }
@@ -20,39 +20,68 @@ export default class Home extends Component {
 componentDidMount()
 {
   
-  //this.setState({api_key:''});
+  //this.setState({access_token:''});
   const values = queryString.parse(this.props.location.search);
   console.log(values.code) // "top"
   const url = 'http://localhost:359/get_token'
   let response_data = {};
-  fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, cors, *same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-        'Content-Type': 'application/json',
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: JSON.stringify({'code': values.code}), // body data type must match "Content-Type" header
-})
-.then(response => 
-  {response_data = response.json(); return response_data;}).then(response =>
-   
-   { console.log(response);
-    const url = 'http://localhost:359/compile_liked_songs';
-    //const headers = {"Authorization":"Bearer " + response.access_token};
-    this.setState({api_key : response.access_token});
-    //console.log(headers);
-    return fetch(url,{
-      method: 'POST',
-      //headers: headers,
-      body: {access_token: response.access_token}
-    }).then(response => {console.log(response.json())})
-  }
-    )
-  //console.log(values.origin) // "im"
-  console.log('yo');
+  fetch(url, 
+    {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, cors, *same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: 
+      {
+          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({'code': values.code}), // body data type must match "Content-Type" header
+    })
+  .then(response => 
+    {
+      response_data = response.json(); 
+      return response_data;
+    })
+  .then(response =>
+    { 
+      console.log(response);
+    
+      this.setState({access_token : response.access_token});
+      localStorage.setItem("access_token",response.access_token)
+      //console.log(headers);
+      console.log(localStorage);
+
+      const user_url = 'https://api.spotify.com/v1/me';
+      const headers = {"Authorization":"Bearer " + response.access_token};
+      return fetch(user_url,
+              {
+                method: 'GET',
+                headers: headers
+              })
+              .then(response => 
+                {
+                  response_data = response.json(); 
+                  return response_data;
+                })
+              .then(response =>
+                {
+                  localStorage.setItem("uid",response.id);
+                  console.log(localStorage);
+                  const url = 'http://localhost:359/compile_liked_songs';
+                  return fetch(url,
+                          {
+                            method: 'POST',
+                            //headers: headers,
+                            body: JSON.stringify({access_token: response.access_token,
+                                                  uid: response.id})
+                          })
+                          .then(response => 
+                            {
+                              console.log(response.json());
+                            })
+                })
+    })
 }
 
 clicked()
@@ -66,7 +95,7 @@ clicked()
         <NavbarComponent>
 
         </NavbarComponent>
-        {this.state.api_key}
+        {this.state.access_token}
         <Button onClick={this.clicked}>
 
         </Button>

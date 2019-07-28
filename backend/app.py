@@ -62,12 +62,14 @@ def get_token():
 
 @app.route('/compile_liked_songs',methods=['GET','POST'])
 def compile_liked_songs():
-    print('compile_liked_songs hit')
+    data = json.loads(request.data)
+    print(data)
     return {'key':'value'}
 
 @app.route('/create_playlist',methods=['GET','POST'])
 def create_playlist():
-    print('create_playlist hit')
+    data = json.loads(request.data)
+    print(data)
     return {'key':'value'}
 
 if __name__ == '__main__':
