@@ -70,10 +70,7 @@ def get_token():
 def compile_liked_songs():
     data = json.loads(request.data)
     print(data)
-    read_from_temp_csv = True
-    if read_from_temp_csv:
-        users[data['uid']] = pd.read_csv('charlie_liked_songs.csv')
-    elif data['uid'] not in users.keys():
+    if data['uid'] not in users.keys():
         df = pd.DataFrame()
         songs_url = 'https://api.spotify.com/v1/me/tracks?' + urllib.urlencode(
                 {
@@ -104,7 +101,7 @@ def compile_liked_songs():
             response = requests.get(response['next'], headers={"Authorization":"Bearer " + data['access_token'],
                                                                "Content-Type":"application/json"}).json()
         print(df.to_string())
-        df.to_csv('charlie_liked_songs.csv')
+        
         users[data['uid']] = df
     print(data)
     return {'hello':'world'}
