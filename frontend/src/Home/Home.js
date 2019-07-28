@@ -69,11 +69,12 @@ componentDidMount()
                   localStorage.setItem("uid",response.id);
                   console.log(localStorage);
                   const url = 'http://localhost:359/compile_liked_songs';
+
                   return fetch(url,
                           {
                             method: 'POST',
                             //headers: headers,
-                            body: JSON.stringify({access_token: response.access_token,
+                            body: JSON.stringify({access_token: localStorage.getItem("access_token"),
                                                   uid: response.id})
                           })
                           .then(response => 

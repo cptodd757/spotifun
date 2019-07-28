@@ -13,8 +13,8 @@ export default class PlaylistCreator extends Component {
       params: 
       {      
         playlist_size:-1,
-        artists: '',
-        genres:''
+        artists: ''
+        // genres:''
       },
       genre_options:['rap',
                      'pop',
@@ -54,7 +54,11 @@ export default class PlaylistCreator extends Component {
                             access_token:localStorage.getItem("access_token"),
                             uid:localStorage.getItem("uid")}), // body data type must match "Content-Type" header
   })
-  .then(response => response.json());
+  .then(response => response.json())
+  .then(response =>
+    {
+      console.log(response);
+    });
   }
 
   render() {
@@ -81,10 +85,10 @@ export default class PlaylistCreator extends Component {
             <Input type="textarea" name="artists" id="artists" onChange={this.handleChange} />
           </FormGroup>
           
-          <FormGroup>
+          {/* <FormGroup>
             <Label for="exampleSelectMulti">Genres</Label>
             <Input type="textarea" name="genres" id="genres" onChange={this.handleChange} />
-          </FormGroup>
+          </FormGroup> */}
         
         
       </Form>
