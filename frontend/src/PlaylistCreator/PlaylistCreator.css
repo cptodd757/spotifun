@@ -15,6 +15,22 @@
     text-align: center;
 }
 
+.ranged-input
+{
+    font-size: calc(6px + 2vmin)
+}
+
+.format
+{
+    font-size: calc(6px + 2vmin);
+    font-style: italic;
+}
+
+.format:not(#release_date_format):not(#liked_date_format)
+{
+    display:none;
+}
+
 .playlistcreator {
     background-color: #282c34;
     min-height: 100vh;
