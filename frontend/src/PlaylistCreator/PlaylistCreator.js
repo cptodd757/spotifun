@@ -12,6 +12,10 @@ export default class PlaylistCreator extends Component {
     this.state = {
       params: 
       {     
+        ranged:
+        {
+
+        }
         // playlist_size:-1,
         // artists: ''
         // genres:''
@@ -19,10 +23,11 @@ export default class PlaylistCreator extends Component {
       genre_options:['rap',
                      'pop',
                      'pop rap'],
-      rangedParamsList: ['Release Date', 'Liked Date','Tempo','Acousticness','Danceability','Energeticness','Instrumentalness','Valence']
+      rangedParamsList: ['Release Date', 'Liked Date','Tempo','Acousticness','Danceability','Energy','Instrumentalness','Valence']
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.submit = this.submit.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.submit = this.submit.bind(this);
+    this.rangedHandleChange = this.rangedHandleChange.bind(this);
   }
 
   handleChange(event)
@@ -34,6 +39,23 @@ export default class PlaylistCreator extends Component {
     params[param_id] = value;
     this.setState({params: params});
     console.log('onChange method called!',event.target.id,event.target.value);
+    console.log('state:',this.state)
+  }
+
+  rangedHandleChange(event)
+  {
+    let ranged_params = this.state.params.ranged;
+    let param_id = event.target.id;
+    let param_bound = event.target.name;
+    let value = event.target.value;
+    if (!(Object.keys(ranged_params).includes(param_id)))
+    {
+      ranged_params[param_id] = {[param_bound]:value};
+    }
+    else
+    {
+      ranged_params[param_id][param_bound] = value;
+    }
     console.log('state:',this.state)
   }
 
@@ -78,12 +100,12 @@ export default class PlaylistCreator extends Component {
         <Form>
           <FormGroup>
             <Label for="exampleText">Playlist Size</Label>
-            <Input type="textarea" name="playlist_size" id="playlist_size" onChange={this.handleChange} />
-          </FormGroup>
+            <Input type="textarea" name="playlist_size" id="playlist_size" onChange={this.handleChange}/>
+          </FormGroup> 
 
           <FormGroup>
             <Label for="exampleText">Artists</Label>
-            <Input type="textarea" name="artists" id="artists" onChange={this.handleChange} />
+            <Input type="textarea" name="artists" id="artists" onChange={this.handleChange}/>
           </FormGroup>
 
           <FormGroup>
@@ -98,13 +120,13 @@ export default class PlaylistCreator extends Component {
                 <Col className="ranged-input">
                   <FormGroup>
                     <Label for="exampleText">Minimum </Label>
-                    <Input type="textarea" id={(key + "_lower").toLowerCase().replace(' ','_')} onChange={this.handleChange} />
+                    <Input type="textarea" name="lower" id={(key).toLowerCase().replace(' ','_')} onChange={this.rangedHandleChange} />
                   </FormGroup>
                 </Col>
                 <Col className="ranged-input">
                   <FormGroup>
                     <Label for="exampleText">Maximum </Label>
-                    <Input type="textarea" id={(key + "_upper").toLowerCase().replace(' ','_')} onChange={this.handleChange} />
+                    <Input type="textarea" name="upper" id={(key).toLowerCase().replace(' ','_')} onChange={this.rangedHandleChange} />
                   </FormGroup>
                 </Col>
               </Row>

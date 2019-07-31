@@ -9,6 +9,7 @@ import base64
 import pandas as pd 
 import numpy as np 
 import unidecode
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -48,6 +49,20 @@ token_headers = {"Content-Type": "application/x-www-form-urlencoded",
 create_playlist_url = 'https://api.spotify.com/v1/users/{}/playlists'
 add_to_playlist_url = 'https://api.spotify.com/v1/playlists/{}/tracks'
 
+audio_features = ["duration_ms",
+  "key",
+  "mode",
+  "time_signature",
+  "acousticness",
+  "danceability",
+  "energy",
+  "instrumentalness",
+  "liveness",
+  "loudness",
+  "speechiness",
+  "valence",
+  "tempo"]
+
 @app.route('/login', methods=['GET','POST'])
 def login():
     return redirect(login_url)
@@ -70,7 +85,10 @@ def get_token():
 def compile_liked_songs():
     data = json.loads(request.data)
     print(data)
-    if data['uid'] not in users.keys():
+    read_from_temp_csv =True
+    if read_from_temp_csv:
+        users[data['uid']] = pd.read_csv('charlie_liked_songs_verbose.csv')
+    elif data['uid'] not in users.keys():
         df = pd.DataFrame()
         songs_url = 'https://api.spotify.com/v1/me/tracks?' + urllib.urlencode(
                 {
@@ -81,6 +99,7 @@ def compile_liked_songs():
                                                     "Content-Type":"application/json"}).json()
         def replace(string):
             return unidecode.unidecode(string)
+        song_counter = 0
         while True:
             if not response["items"]:
                 break
@@ -96,12 +115,32 @@ def compile_liked_songs():
                 for key in entry.keys():
                     entry[key] = replace(entry[key])
                 df = df.append(entry, ignore_index=True)
+                song_counter = song_counter + 1
+                ARBITRARY_TESTING_LIMIT = 10000
+                if song_counter > ARBITRARY_TESTING_LIMIT:
+                    break
             if response["next"] is None:
                 break
             response = requests.get(response['next'], headers={"Authorization":"Bearer " + data['access_token'],
                                                                "Content-Type":"application/json"}).json()
         print(df.to_string())
-        
+        df.to_csv('charlie_liked_songs.csv')
+
+        advanced_params = Trueg
+        if advanced_params:
+
+            def get_advanced_params(row):
+                #print(row)
+                response = requests.get('https://api.spotify.com/v1/audio-features/{}'.format(row['id']),headers={"Authorization":"Bearer " + data['access_token'],
+                                                               "Content-Type":"application/json"}).json()
+                for feature in audio_features:
+                    row[feature] = response[feature]
+                
+                return row
+
+            df = df.apply(get_advanced_params,axis=1)
+            df.to_csv('charlie_liked_songs_verbose.csv')
+
         users[data['uid']] = df
     print(data)
     return {'hello':'world'}
@@ -113,6 +152,22 @@ def create_playlist():
     artists = data['params']['artists'].split(', ')
     subset = df
     subset = subset[subset['artists'].str.contains('|'.join(artists))]
+    
+    def normalize_date(date):
+        if len(date) < 10:
+            date = date + '-01-01'
+        return datetime.strptime(date,'%Y-%m-%d')
+    if 'release_date' in data['params']['ranged']:
+        subset['release_date_as_datetime'] = subset['release_date'].apply(normalize_date)
+        subset = subset[(subset['release_date_as_datetime'] < data['params']['ranged']['release_date']['upper']) & (subset['release_date_as_datetime'] > data['params']['ranged']['release_date']['lower'])]
+    if 'liked_date' in data['params']['ranged']:
+        subset['added_at_as_datetime'] = subset['added_at'].apply(lambda date: normalize_date(date[:10]))
+        subset = subset[(subset['added_at_as_datetime'] < data['params']['ranged']['liked_date']['upper']) & (subset['added_at_as_datetime'] > data['params']['ranged']['liked_date']['lower'])]
+    for param in data['params']['ranged'].keys():
+        if param in ['release_date','liked_date']:
+            continue
+        subset = subset[(subset[param] < float(data['params']['ranged'][param]['upper'])) & (subset[param] > float(data['params']['ranged'][param]['lower']))]
+    
     ids = subset['id'].values
     print(data)
 
