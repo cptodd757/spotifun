@@ -22,10 +22,10 @@ export default class Login extends Component
     //               scope: scope,
     //               redirect_uri: redirect_uri
     //             })
-    const url = 'http://localhost:359/login';
+    const url = 'http://54.82.235.204:4000/login';
     console.log(url)
     console.log('hello');
-    //postData('http://localhost:359/login', {answer: 42})
+    //postData('http://54.82.235.204:4000/login', {answer: 42})
     //  .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
     //  .catch(error => console.error(error)); 
     fetch(url).then(response => console.log(response));

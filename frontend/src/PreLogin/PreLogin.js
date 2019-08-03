@@ -9,7 +9,7 @@ export default class PreLogin extends Component {
         <header className="App-header">
           <h2>
             Make playlists and see your data more easily.        </h2>
-          <a href="http://localhost:359/login">Login to Spotify</a>
+          <a href="http://54.82.235.204:4000/login">Login to Spotify</a>
       </header>
       </div>
     )

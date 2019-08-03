@@ -23,7 +23,7 @@ componentDidMount()
   //this.setState({access_token:''});
   const values = queryString.parse(this.props.location.search);
   console.log(values.code) // "top"
-  const url = 'http://localhost:359/get_token'
+  const url = 'http://54.82.235.204:4000/get_token'
   let response_data = {};
   if ((values.code !== null) && (values.code !== undefined))
   {
@@ -70,7 +70,7 @@ componentDidMount()
                   {
                     localStorage.setItem("uid",response.id);
                     console.log(localStorage);
-                    const url = 'http://localhost:359/compile_liked_songs';
+                    const url = 'http://54.82.235.204:4000/compile_liked_songs';
 
                     return fetch(url,
                             {
