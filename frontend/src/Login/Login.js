@@ -13,7 +13,7 @@ export default class Login extends Component
   {
     // const client_id = '81d7431ddf80433585d18cca9c08c815';
     // const scope = 'user-read-private user-read-email user-top-read';
-    // const redirect_uri = 'http://localhost:3000';
+    // const redirect_uri = 'http://3.86.203.151:3000';
     // const queryString = require('query-string')
     // const url = 'https://accounts.spotify.com/authorize?' +
     //             queryString.stringify({

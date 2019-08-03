@@ -29,13 +29,13 @@ export default class NavbarComponent extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="http://localhost:3000/">Login</NavLink>
+                <NavLink href="http://3.86.203.151:3000/">Login</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="http://localhost:3000/home">Home</NavLink>
+                <NavLink href="http://3.86.203.151:3000/home">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="http://localhost:3000/playlist_creator">Playlist Creator</NavLink>
+                <NavLink href="http://3.86.203.151:3000/playlist_creator">Playlist Creator</NavLink>
               </NavItem>
               {/* <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
