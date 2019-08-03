@@ -23,7 +23,9 @@ export default class PlaylistCreator extends Component {
       genre_options:['rap',
                      'pop',
                      'pop rap'],
-      rangedParamsList: ['Release Date', 'Liked Date','Tempo','Acousticness','Danceability','Energy','Instrumentalness','Valence']
+      rangedParamsList: ['Release Date', 'Liked Date','Tempo','Acousticness',
+                         'Danceability','Energy','Instrumentalness','Valence'],
+      submit_message: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.submit = this.submit.bind(this);
@@ -81,6 +83,20 @@ export default class PlaylistCreator extends Component {
   .then(response =>
     {
       console.log(response);
+      if ((response.snapshot_id === null) || (response.snapshot_id === undefined))
+      {
+        this.setState({submit_message: "An error occurred."});
+      }
+      else
+      {
+        this.setState({submit_message: "Playlist created!"});
+      }
+      console.log(this.state);
+    })
+  .catch(error =>
+    {
+      this.setState({submit_message: "An error occurred.  Make sure you have logged in to Spotify first."});
+      console.log("error caught!",this.state,error);
     });
   }
 
@@ -115,7 +131,7 @@ export default class PlaylistCreator extends Component {
           {
            this.state.rangedParamsList.map(key => 
             <div>
-              {key} <text id={key.toLowerCase().replace(' ','_') + "_format"} className="format">(YYYY-MM-DD)</text>
+              {key} <p id={key.toLowerCase().replace(' ','_') + "_format"} className="format">(YYYY-MM-DD)</p>
               <Row>
                 <Col className="ranged-input">
                   <FormGroup>
@@ -142,6 +158,9 @@ export default class PlaylistCreator extends Component {
       </Form>
 
       <Button onClick={this.submit}>Submit</Button>
+      <div className="submit-message">
+        {this.state.submit_message}
+      </div>
       </div>
       </div>
       </div>

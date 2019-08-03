@@ -28,13 +28,16 @@ export default class NavbarComponent extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-            <NavItem>
+              <NavItem>
+                <NavLink href="http://localhost:3000/">Login</NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink href="http://localhost:3000/home">Home</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="http://localhost:3000/playlist_creator">Playlist Creator</NavLink>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
+              {/* <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Options
                 </DropdownToggle>
@@ -50,7 +53,7 @@ export default class NavbarComponent extends Component {
                     Reset
                   </DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
             </Nav>
           </Collapse>
         </Navbar>

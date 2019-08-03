@@ -41,3 +41,10 @@
     font-size: calc(10px + 2vmin);
     /* color: rgb(5, 119, 39); */
   }
+
+  .submit-message
+  {
+      font-style: italic;
+      color: red;
+
+  }

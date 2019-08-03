@@ -8,3 +8,8 @@
     font-size: calc(10px + 2vmin);
     color: rgb(5, 119, 39);
   }
+
+  .home-wrapper {
+    /* display:flex; */
+    text-align:center;
+  }
