@@ -1,0 +1,12 @@
+flask
+flask_cors
+json
+bson
+re
+urllib
+requests
+base64
+pandas 
+numpy
+unidecode
+datetime
