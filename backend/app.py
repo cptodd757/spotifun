@@ -33,7 +33,7 @@ scope = ' '.join([  'user-top-read',
                     'playlist-read-collaborative',
                     'playlist-read-private',
                     'playlist-modify-private'])
-redirect_uri = 'http://localhost:3000/home'
+redirect_uri = 'http://3.86.203.151:3000//home'
 login_url = 'https://accounts.spotify.com/authorize?' + urllib.urlencode({
                   'response_type': 'code',
                   'client_id': client_id,
