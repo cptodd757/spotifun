@@ -15,6 +15,12 @@
     text-align: center;
 }
 
+.disclaimer
+{
+    font-style: italic;
+    font-size: calc(6px + 2vmin)
+}
+
 .ranged-input
 {
     font-size: calc(6px + 2vmin)

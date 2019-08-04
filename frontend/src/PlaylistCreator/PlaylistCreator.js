@@ -113,6 +113,11 @@ export default class PlaylistCreator extends Component {
           Automatically create a playlist based on the information you specify below.
           </div>
           <br></br>
+          <div className="disclaimer">
+          Note: only specify Artists (comma separated), Release Date, and Liked Date for now--the other features are not accounted for yet.
+          Also make sure to fill in a minimum and maximum for the dates.
+          </div>
+          <br></br>
         <Form>
           <FormGroup>
             <Label for="exampleText">Playlist Size</Label>
@@ -131,7 +136,7 @@ export default class PlaylistCreator extends Component {
           {
            this.state.rangedParamsList.map(key => 
             <div>
-              {key} <p id={key.toLowerCase().replace(' ','_') + "_format"} className="format">(YYYY-MM-DD)</p>
+              {key} <span id={key.toLowerCase().replace(' ','_') + "_format"} className="format">(YYYY-MM-DD)</span>
               <Row>
                 <Col className="ranged-input">
                   <FormGroup>

@@ -126,7 +126,7 @@ def compile_liked_songs():
         print(df.to_string())
         df.to_csv('charlie_liked_songs.csv')
 
-        advanced_params = True
+        advanced_params = False
         if advanced_params:
 
             def get_advanced_params(row):
