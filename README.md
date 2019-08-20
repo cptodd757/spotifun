@@ -1,5 +1,7 @@
 # spotifun
 
+An experiment with the Spotify Web API for personalized playlist creation and data exploration.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
