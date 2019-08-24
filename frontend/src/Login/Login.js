@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+let config = require('../config.json');
 
 export default class Login extends Component 
 {
@@ -22,10 +23,10 @@ export default class Login extends Component
     //               scope: scope,
     //               redirect_uri: redirect_uri
     //             })
-    const url = 'http://54.82.235.204:4000/login';
+    const url = config.backend_hostname + 'login';
     console.log(url)
     console.log('hello');
-    //postData('http://54.82.235.204:4000/login', {answer: 42})
+    //postData(config.backend_hostname + 'login', {answer: 42})
     //  .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
     //  .catch(error => console.error(error)); 
     fetch(url).then(response => console.log(response));

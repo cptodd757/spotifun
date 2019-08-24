@@ -4,6 +4,8 @@ import NavbarComponent from '../NavbarComponent/NavbarComponent.js';
 import { Nav } from 'react-bootstrap';
 import './PlaylistCreator.css';
 
+let config = require('../config.json');
+
 export default class PlaylistCreator extends Component {
 
   constructor()
@@ -63,7 +65,7 @@ export default class PlaylistCreator extends Component {
 
   submit()
   {
-    const submit_url = 'http://54.82.235.204:4000/create_playlist';
+    const submit_url = config.backend_hostname + 'create_playlist';
     fetch(submit_url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, cors, *same-origin

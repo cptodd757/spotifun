@@ -11,7 +11,7 @@ import numpy as np
 import unidecode
 from datetime import datetime
 
-RUN_LOCALLY = False
+RUN_LOCALLY = True
 
 hostname = 'localhost' if RUN_LOCALLY else '3.86.203.151'
 
@@ -175,12 +175,14 @@ def create_playlist():
     ids = subset['id'].values
     print(data)
 
+    #response from create_playlist_url
     response = requests.post(create_playlist_url.format(data['uid']),
                             headers={"Authorization":"Bearer " + data['access_token'],
                                      "Content-Type":"application/json"},
                             json={"name":"API: {}".format(data['params']['artists'])}).json()
     #print(response)
 
+    #response from add_to_playlist_url
     response = requests.post(add_to_playlist_url.format(response['id']),
                              headers={"Authorization":"Bearer " + data['access_token'],
                                      "Content-Type":"application/json"},

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './PreLogin.css';
 import logo from '../logo.svg';
 
+let config = require('../config.json');
+
 export default class PreLogin extends Component {
   render() {
     return (
@@ -9,7 +11,7 @@ export default class PreLogin extends Component {
         <header className="App-header">
           <h2>
             Make playlists and see your data more easily.        </h2>
-          <a href="http://54.82.235.204:4000/login">Login to Spotify</a>
+          <a href={config.backend_hostname + 'login'}>Login to Spotify</a>
       </header>
       </div>
     )

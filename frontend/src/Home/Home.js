@@ -5,6 +5,7 @@ import NavbarComponent from '../NavbarComponent/NavbarComponent.js';
 
 import './Home.css';
 import { Nav } from 'react-bootstrap';
+let config = require('../config.json');
 
 export default class Home extends Component {
 
@@ -23,7 +24,7 @@ componentDidMount()
   //this.setState({access_token:''});
   const values = queryString.parse(this.props.location.search);
   console.log(values.code) // "top"
-  const url = 'http://54.82.235.204:4000/get_token'
+  const url = config.backend_hostname + 'get_token'
   let response_data = {};
   if ((values.code !== null) && (values.code !== undefined))
   {
@@ -70,7 +71,7 @@ componentDidMount()
                   {
                     localStorage.setItem("uid",response.id);
                     console.log(localStorage);
-                    const url = 'http://54.82.235.204:4000/compile_liked_songs';
+                    const url = config.backend_hostname + 'compile_liked_songs';
 
                     return fetch(url,
                             {
