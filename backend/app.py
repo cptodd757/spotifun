@@ -11,6 +11,10 @@ import numpy as np
 import unidecode
 from datetime import datetime
 
+RUN_LOCALLY = False
+
+hostname = 'localhost' if RUN_LOCALLY else '3.86.203.151'
+
 app = Flask(__name__)
 CORS(app)
 users = {}
@@ -33,7 +37,7 @@ scope = ' '.join([  'user-top-read',
                     'playlist-read-collaborative',
                     'playlist-read-private',
                     'playlist-modify-private'])
-redirect_uri = 'http://3.86.203.151:3000/home'
+redirect_uri = 'http://' + hostname + ':3000/home'
 login_url = 'https://accounts.spotify.com/authorize?' + urllib.urlencode({
                   'response_type': 'code',
                   'client_id': client_id,
