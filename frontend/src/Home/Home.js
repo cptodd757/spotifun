@@ -71,18 +71,33 @@ componentDidMount()
                   {
                     localStorage.setItem("uid",response.id);
                     console.log(localStorage);
-                    const url = config.backend_hostname + 'compile_liked_songs';
+                    const liked_songs_url = config.backend_hostname + 'compile_liked_songs';
 
-                    return fetch(url,
+                    return fetch(liked_songs_url,
                             {
                               method: 'POST',
                               //headers: headers,
                               body: JSON.stringify({access_token: localStorage.getItem("access_token"),
-                                                    uid: response.id})
+                                                    uid: localStorage.getItem("uid")})
                             })
                             .then(response => 
                               {
                                 console.log(response.json());
+
+                                const recently_played_url = config.backend_hostname + 'compile_recently_played';
+
+                                return fetch(recently_played_url,
+                                        {
+                                          method: 'POST',
+                                          //headers: headers,
+                                          body: JSON.stringify({access_token: localStorage.getItem("access_token"),
+                                                                uid: localStorage.getItem("uid")})
+                                        })
+                                        .then(response =>
+                                          {
+                                            console.log('compile_recently_played endpoint hit');
+                                            console.log(response.json());
+                                          })
                               })
                   })
       })
