@@ -285,10 +285,42 @@ def create_playlist():
     print(response)
     return jsonify(response)
 
-# @app.route('/analyze', methods=['GET','POST'])
-# def analyze():
-#     data = json.loads(request.data)
-#     df = users[data['uid']]['liked_songs']
+@app.route('/analyze', methods=['GET','POST'])
+def analyze():
+    data = json.loads(request.data)
+    df = users[data['uid']]['liked_songs']
+    genres_df = pd.DataFrame()
+    genres = []
+    genres_freqs=[]
+
+    #create one-hotted columns and also calculate frequencies
+    def one_hot_genres(row):
+        for genre in row['genres'].split(', '):
+            if genre not in df.columns.values:
+                print(genre)
+                df[genre] = df['genres'].str.contains(genre)
+                #genres_df = genres_df.append({"genre":genre,"proportion":df[genre].mean()})
+                genres.append(genre)
+                genres_freqs.append(df[genre].mean())
+                
+
+        #return row
+    df.apply(one_hot_genres,axis=1)
+    for i in range(len(genres)):
+        genres_df = genres_df.append({"genre":genres[i],"freq":genres_freqs[i]}, ignore_index=True)
+        print(genres_df)
+    #df.to_csv('one hot genres.csv')
+    genres_df = genres_df.sort_values(by='freq',ascending=False)
+    print(genres,genres_freqs)
+    print(genres_df)
+
+    genres_df.to_csv('charlie genre proportions.csv')
+
+    #parallel arrays
+    freqs = []
+    
+
+    return 'analyze response'
     
 
 if __name__ == '__main__':
