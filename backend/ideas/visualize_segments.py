@@ -47,4 +47,4 @@ name = 'wagner'
 with open('data/{}.json'.format(name)) as f:
   obladi = json.load(f)
 print(obladi["track"]["duration"])
-visualize_segments(obladi["segments"]) 
+visualize_segments(obladi["segments"])  
