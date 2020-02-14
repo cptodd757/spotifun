@@ -11,6 +11,8 @@ import numpy as np
 import unidecode
 from datetime import datetime
 
+import sys
+sys.path.append('./helpers')
 import config
 from get_token_helper import get_token_helper
 from compile_liked_songs_helper import compile_liked_songs_helper
